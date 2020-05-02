@@ -1,6 +1,7 @@
 import requests
 import hashlib
 import sys
+from pathlib import Path
 
 
 def request_api_data(query_char):
@@ -9,6 +10,9 @@ def request_api_data(query_char):
 	if res.status_code !=200:
 		raise RuntimeError(f"Error fetching: {res.status_code}, check the API and try again.")
 	return res
+
+with open('paswords_for_check.txt', 'r') as file:
+	r=file.read()
 
 
 def get_password_leaks_count(hashes, hash_to_check):
@@ -27,7 +31,7 @@ def pwned_api_ceck(password):
 
 
 def main(args):
-	for password in args:
+	for password in args.split('\n'):
 		count = pwned_api_ceck(password)
 		if count:
 			print(f"{password} was found {count} times..you should probably change password!")
@@ -37,6 +41,6 @@ def main(args):
 
 
 if __name__ == '__main__':
-	sys.exit(main(sys.argv[1:]))
+	sys.exit((main(r)))
 
 
