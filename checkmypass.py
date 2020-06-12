@@ -30,7 +30,8 @@ def pwned_api_ceck(password):
 	return get_password_leaks_count(response, tail)
 
 
-def main(args):
+def main():
+	args = input("Enter password to check: ")
 	for password in args.split('\n'):
 		count = pwned_api_ceck(password)
 		if count:
@@ -41,6 +42,6 @@ def main(args):
 
 
 if __name__ == '__main__':
-	sys.exit((main(r)))
+	sys.exit((main()))
 
 
